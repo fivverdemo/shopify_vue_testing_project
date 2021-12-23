@@ -1,0 +1,104 @@
+computed: {
+    current_variant() {
+      return this.variants.find(variant => variant.id == this.current_variant_id);
+    }
+  },
+
+methods: {
+    variant_from_options() {
+      const variant = this.variants.find((variant) => {
+        var match = true;
+        if(variant.option1 != '') {
+          match = variant.option1 == this.variant_selection.option1
+        }
+        if(match && variant.option2 != '') {
+          match = variant.option2 == this.variant_selection.option2
+        }
+        if(match && variant.option3 != '') {
+          match = variant.option3 == this.variant_selection.option3
+        }
+        return match;
+      });
+      this.current_variant_id = variant.id;
+      this.update_history_state(variant);
+     
+    },
+    update_history_state(variant) {
+      if(!history.replaceState || !variant) {
+        return;
+      }
+      var newurl = window.location.protocol + '//' + window.location.host + window.location.pathname + '?variant=' + variant.id;
+      window.history.replaceState({path: newurl}, '', newurl);
+    },
+
+    printArray:function(item, index){
+      this.$refs.myId.innerHTML = this.$refs.myId.innerHTML + "<p>Index["+item.ida+"] = "+item.name+"</p>";
+       },
+       myFunction: function () {		
+        this.elmnIndex = this.items_without_repetaion.forEach(this.printArray);
+        },
+       valuae: function (str,index) {
+        this.$refs.myIda.innerHTML = this.$refs.myIda.innerHTML + "<p>Index["+str+"] = "+str+"</p>";
+        {% for color_option in product.options_by_name['Color'].values %}
+          if(str.search(this.value{{ forloop.index }} ) >= 0 ) {
+            return (
+              this.names.push(this.value{{ forloop.index }} )
+            );
+          }
+        {% endfor %} 
+       
+    
+    },
+        myFunctionstrs: function () {		
+          this.elmnIndex = this.strs.forEach(this.valuae);
+            
+          },
+          itemsmyFunction: function () {
+            this.items = this.color_counts.map(this.itemstestFunction);
+          },
+
+          itemstestFunction: function (ida, index) {
+            return {
+              ida: ida,
+              name: this.names[index],
+              image: this.varintimagelink[index],
+            
+
+            }
+          },
+          removeDuplicates : function(originalArray, prop){
+            const newArray = [];
+            const lookupObject  = {};
+       
+            for(var i in originalArray) {
+               lookupObject[originalArray[i][prop]] = originalArray[i];
+            }
+       
+            for(i in lookupObject) {
+                newArray.push(lookupObject[i]);
+               
+              
+            }
+           
+            {% comment %} fruitsa.push(newArray); {% endcomment %}
+            return newArray;
+          },
+          showconsole: function() {
+            console.log(this.items);
+            let aaa = "hello";
+            console.log(aaa);
+            this.items_without_repetaion = this.removeDuplicates(this.items, "name");
+          },
+    
+
+  },   
+   mounted: function() {
+   // Calls the method before page loads
+    this.myFunctionstrs(); // Calls the method before page loads
+    // Calls the method before page loads
+    this.itemsmyFunction(); // Calls the method before page loads
+    this.removeDuplicates(); // Calls the method before page loads
+    this.showconsole(); // Calls the method before page loads
+     // Calls the method before page loads
+     this.myFunction() 
+}

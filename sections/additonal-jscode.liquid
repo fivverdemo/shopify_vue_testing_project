@@ -1,0 +1,102 @@
+<script>
+    {% comment %} /////////// collection varinat name ////////////// {% endcomment %}
+    var strs = [ {% for variant in product.variants %}
+      {% if forloop.last == true %}
+        "{{variant.title }}"
+        {% else %}
+        "{{variant.title }}",
+      {% endif %}          
+    {% endfor%} ];
+
+    {% comment %} /////////// collection color name ////////////// {% endcomment %}
+  
+    var ids = [ {% for color_option in product.options_by_name['Color'].values %}
+      {% if forloop.last == true %}
+        "{{ forloop.index }}"
+        {% else %}
+        "{{ forloop.index }}",
+      {% endif %}  
+      
+    {% endfor %}
+  ]; //Hundreds of elements here
+
+
+    const names = []; //Hundreds of elements here
+
+    {% comment %} /////////// collection images name ////////////// {% endcomment %}
+
+    var images = [ {% for variant in product.variants %}
+      {% if forloop.last == true %}
+        "{{ variant.image | img_url: '2048x' }}"
+        {% else %}
+        "{{ variant.image | img_url: '2048x' }}",
+      {% endif %}          
+    {% endfor%} ]; //Hundreds of elements here
+    
+   
+    {% for color_option in product.options_by_name['Color'].values %}
+      const value{{ forloop.index }} = "{{ color_option }}" ;
+    {% endfor %}
+  
+    
+        function valuae (str) {
+  
+    {% for color_option in product.options_by_name['Color'].values %}
+      if(str.search(value{{ forloop.index }} ) >= 0 ) {
+        return (
+          names.push(value{{ forloop.index }} )
+        );
+      }
+    {% endfor %}
+  
+        
+        };
+    strs.forEach(valuae);
+    console.log(names);
+  
+  
+    // Create the object array
+    var items = ids.map((ida, index) => {
+      return {
+        ida: ida,
+        name: names[index],
+        image: images[index]
+      }
+    });
+    
+    
+    function removeDuplicates(originalArray, prop) {
+         var newArray = [];
+         var lookupObject  = {};
+    
+         for(var i in originalArray) {
+            lookupObject[originalArray[i][prop]] = originalArray[i];
+         }
+    
+         for(i in lookupObject) {
+             newArray.push(lookupObject[i]);
+            
+           
+         }
+        
+         {% comment %} fruitsa.push(newArray); {% endcomment %}
+         return newArray;
+     }
+    
+    {% comment %} var uniqueArray = removeDuplicates(items, "name");
+    console.log("uniqueArray is: " + uniqueArray ); {% endcomment %}
+   var uniqueArray = removeDuplicates(items, "name");
+  console.log("uniqueArray is: " + JSON.stringify(uniqueArray));
+  
+  const data_recive =  uniqueArray;
+  console.log(data_recive);
+  var ia,  xy = "";
+   for (ia in data_recive) {
+     xy += '<h2 style=" background-image: url( ' + data_recive[ia].image + ');">' + data_recive[ia].name +"</h2>" + "<br>";
+     xy += '<div class="fortya" style=" background-image: url( ' + data_recive[ia].image + '); width: 30px; height: 30px; background-size: cover;" > </div>';
+  
+  }
+  document.getElementById("demo").innerHTML = xy;
+  
+  </script>
+  

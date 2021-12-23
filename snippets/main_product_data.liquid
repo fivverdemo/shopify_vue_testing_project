@@ -1,0 +1,80 @@
+data() {
+    return {
+      item1:['12', '10', '9','5', '6', '4'],
+      fulltitletocolor:[],
+      elmnIndex:'',
+      items:{},
+      items_without_repetaion:{},
+      elmnIndexa:[],
+      names:[],
+      current_variant_id: "{{ product.selected_or_first_available_variant.id }}",
+      
+      variant_selection: {
+        option1: "{{ product.options_with_values[0].selected_value }}",
+        option2: "{{ product.options_with_values[1].selected_value }}",
+        option3: "{{ product.options_with_values[2].selected_value }}",
+      },
+      variants: [
+        {% for variant in product.variants %}
+          {
+            id: "{{ variant.id }}",
+            available: {{ variant.available }},
+            option1: "{{ variant.option1 }}",
+            option2: "{{ variant.option2 }}",
+            option3: "{{ variant.option3 }}",
+            price: "{{ variant.price | money }}",
+            {% assign img_url = variant.image.src | img_url: '500x', scale: 2 %}
+            image: "{% unless img_url contains 'no-image' %}{{ img_url }}{% endunless %}"
+          },
+        {% endfor %}
+      ],
+      {% comment %} ///// it is call strs in js code \\\\\\ {% endcomment %}
+      strs: [ {% for variant in product.variants %}
+        {% if forloop.last == true %}
+          "{{variant.title }}" 
+          {% else %}
+          "{{variant.title }}" ,
+        {% endif %}          
+      {% endfor%} ],
+
+      {% comment %} ///// it is call ids in js code \\\\\\ {% endcomment %}
+
+       color_counts : [ {% for color_option in product.options_by_name['Color'].values %}
+        {% if forloop.last == true %}
+          "{{ forloop.index }}"
+          {% else %}
+          "{{ forloop.index }}",
+        {% endif %}  
+        
+      {% endfor %}
+         ],
+         {% comment %} ///// it is call ids in js code end \\\\\\ {% endcomment %}
+         {% comment %} ///// it is image collection and called images here  code start \\\\\\ {% endcomment %}
+
+          varintimagelink : [ {% for variant in product.variants %}
+          {% if forloop.last == true %}
+            "{{ variant.image | img_url: '2048x' }}"
+            {% else %}
+            "{{ variant.image | img_url: '2048x' }}",
+          {% endif %}          
+        {% endfor%} ],
+
+
+         {% comment %} ///// it is image collection here  code end \\\\\\ {% endcomment %}
+
+         {% comment %} ///// it is color registation called color_option  code  here  code start \\\\\\ {% endcomment %}
+
+         {% for color_option in product.options_by_name['Color'].values %}
+           value{{ forloop.index }} : "{{ color_option }}" ,
+        {% endfor %}
+
+         {% comment %} ///// it is color registation code  here  code end \\\\\\ {% endcomment %}
+         {% comment %} ///// it is color name from the big title code  here  code  \\\\\\ {% endcomment %}
+
+
+         {% comment %} ///// it is color name from the big title code code  here  code end \\\\\\ {% endcomment %}
+      
+
+      fallback_product_image: "{{ featured_image | img_url: '500x', scale: 2 }}"
+    }
+  },

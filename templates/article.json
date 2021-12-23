@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main-artical": {
+      "type": "main-artical",
+      "settings": {}
+    }
+  },
+  "order": ["main-artical"]
+}
