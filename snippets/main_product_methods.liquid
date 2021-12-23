@@ -38,7 +38,7 @@ methods: {
         this.elmnIndex = this.items_without_repetaion.forEach(this.printArray);
         },
        valuae: function (str,index) {
-        this.$refs.myIda.innerHTML = this.$refs.myIda.innerHTML + "<p>Index["+str+"] = "+str+"</p>";
+        this.$refs.myIda.innerHTML = this.$refs.myIda.innerHTML + "<p  @click='myFunction()'>Index["+index+"] = "+str+"</p>";
         {% for color_option in product.options_by_name['Color'].values %}
           if(str.search(this.value{{ forloop.index }} ) >= 0 ) {
             return (
@@ -83,22 +83,33 @@ methods: {
             {% comment %} fruitsa.push(newArray); {% endcomment %}
             return newArray;
           },
+
           showconsole: function() {
             console.log(this.items);
-            let aaa = "hello";
-            console.log(aaa);
-            this.items_without_repetaion = this.removeDuplicates(this.items, "name");
+            let aaa = this.removeDuplicates(this.items, "name");
+            this.items_without_repetaion = aaa;
+          },
+          {% comment %} west code //// {% endcomment %}
+          items_without_repetaion_jeson_funcation: function(){
+            this.items_without_repetaion_jeson = JSON.stringify(this.items_without_repetaion);
+           
+            console.log(this.items_without_repetaion_jeson);
+          },
+          itemfunctiondatasending: function( vale){
+            console.log(vale);
+            this.variant_selection.option2 = vale;
+            this.variant_from_options();
           },
     
 
   },   
    mounted: function() {
-   // Calls the method before page loads
+    {% comment %} this.myFunction() // Calls the method before page loads {% endcomment %}
     this.myFunctionstrs(); // Calls the method before page loads
     // Calls the method before page loads
     this.itemsmyFunction(); // Calls the method before page loads
     this.removeDuplicates(); // Calls the method before page loads
+    this.items_without_repetaion_jeson_funcation();
     this.showconsole(); // Calls the method before page loads
      // Calls the method before page loads
-     this.myFunction() 
 }

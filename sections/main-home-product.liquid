@@ -14,6 +14,35 @@
     {% if product.variants.size > 1 %}
       <div class="variant-select">
         {% for product_option in product.options_with_values %}
+          {% assign handlea =  product_option.name  %}
+        {% if handlea == "Color" %}
+            These shoes are awesome!
+            <label for="{{ product_option.name }}">
+              {{ product_option.name }}
+            </label>
+            <select id="{{ product_option.name }}" v-model="variant_selection.option{{ product_option.position }}" @change="variant_from_options">
+              {% for value in product_option.values %}
+                <option {% if product_option.selected_value == value %}selected{% endif %}>
+                  {{ value }}
+                </option>
+              {% endfor %}
+            </select>
+
+          {% else %}
+
+        {% endif %} 
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% if product.variants.size > 1 %}
+      <div class="variant-select">
+        {% for product_option in product.options_with_values %}
+          {% assign handlea =  product_option.name  %}
+        {% if handlea == "Color" %}
+          
+          
+
+          {% else %}
           <label for="{{ product_option.name }}">
             {{ product_option.name }}
           </label>
@@ -24,6 +53,7 @@
               </option>
             {% endfor %}
           </select>
+        {% endif %} 
         {% endfor %}
       </div>
     {% endif %}
@@ -36,6 +66,15 @@
     </form>
   </div>
 
+  <ul>
+ 
+  
+    <li :key="item.name" v-for="item in items_without_repetaion">  <div class="single-project" :style="{ 'background-image': 'url(' + item.image + ')' }" @click="itemfunctiondatasending(item.name)" ></div>
+  
+  
+  
+  </li>
+  </ul>
 
   ${items_without_repetaion}
   <ul id="array-rendering">
@@ -53,6 +92,11 @@
 	<p ref="myIda"></p>
 
 	<button @click="myFunction()">Click Me</button>
+
+  <br>
+<hr>
+
+
 </div>
 
 
@@ -66,6 +110,19 @@
 {% stylesheet %}
 h4#dem {
   margin-top: 123px;
+}
+.single-project {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 73px;
+}
+li {
+  margin: 0 5px;
+  display: inline-block;
 }
 {% endstylesheet %}
 
