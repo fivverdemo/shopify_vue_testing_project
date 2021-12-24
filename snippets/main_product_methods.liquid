@@ -11,8 +11,8 @@ methods: {
         if(variant.option1 != '') {
           match = variant.option1 == this.variant_selection.option1
         }
-        if(match && variant.option2 != '') {
-          match = variant.option2 == this.variant_selection.option2
+        if(match && variant.optionColor != '') {
+          match = variant.optionColor == this.variant_selection.optionColor
         }
         if(match && variant.option3 != '') {
           match = variant.option3 == this.variant_selection.option3
@@ -97,9 +97,36 @@ methods: {
           },
           itemfunctiondatasending: function( vale){
             console.log(vale);
-            this.variant_selection.option2 = vale;
+            this.variant_selection.optionColor = vale;
             this.variant_from_options();
           },
+          varint_index_find: function(){
+            console.log("varint index find");
+ 
+            {% for value in product.options_by_name['Color'].values %}
+              if( this.value{{ forloop.index }} == "{{ product.options_with_values[1].selected_value  }}"){
+                console.log(this.value{{ forloop.index }} +  "product.options_with_values[1].selected_value");
+
+                {% comment %} this.item1 = {% endcomment %}
+
+              }
+              if( this.value{{ forloop.index }} == "{{ product.options_with_values[2].selected_value  }}"){
+                console.log(this.value{{ forloop.index }} +  "product.options_with_values[2].selected_value");
+
+                {% comment %} this.item1 = {% endcomment %}
+
+              }
+              if( this.value{{ forloop.index }} == "{{ product.options_with_values[3].selected_value  }}"){
+                console.log(this.value{{ forloop.index }} +  "product.options_with_values[1].selected_value");
+
+                {% comment %} this.item1 = {% endcomment %}
+
+              }
+              
+            {% endfor %}
+    
+          },
+    
     
 
   },   
@@ -112,4 +139,6 @@ methods: {
     this.items_without_repetaion_jeson_funcation();
     this.showconsole(); // Calls the method before page loads
      // Calls the method before page loads
-}
+    this.varint_index_find();
+
+    }

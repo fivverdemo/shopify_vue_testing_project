@@ -16,16 +16,17 @@
         {% for product_option in product.options_with_values %}
           {% assign handlea =  product_option.name  %}
         {% if handlea == "Color" %}
+          
             These shoes are awesome!
             <label for="{{ product_option.name }}">
               {{ product_option.name }}
             </label>
-            <select id="{{ product_option.name }}" v-model="variant_selection.option{{ product_option.position }}" @change="variant_from_options">
+            <select id="{{ product_option.name }}" v-model="variant_selection.optionColor" @change="variant_from_options">
               {% for value in product_option.values %}
-                <option {% if product_option.selected_value == value %}selected{% endif %}>
-                  {{ value }}
-                </option>
-              {% endfor %}
+              <option {% if product_option.selected_value == value %}selected{% endif %}>
+                {{ value }}
+              </option>
+            {% endfor %}
             </select>
 
           {% else %}
@@ -76,16 +77,15 @@
   </li>
   </ul>
 
-  ${items_without_repetaion}
-  <ul id="array-rendering">
+  
+  {% comment %} <ul id="array-rendering">
     <li v-for="item in varintimagelink">
       ${item}
     </li>
-  </ul>
+  </ul> {% endcomment %}
   {% for color_option in product.options_by_name['Color'].values %}
-   ${ value{{ forloop.index }} }
+    value{{ forloop.index }} : ${ value{{ forloop.index }} }
  {% endfor %}
- <p>item 1 = {{ item1 }}</p>
 	<p ref="myId"></p>
 
 
@@ -94,8 +94,15 @@
 	<button @click="myFunction()">Click Me</button>
 
   <br>
+  
 <hr>
+<h1>  {% for variant in product.variants %} {{ variant.option2 }}
+{% endfor %}</h1>
+<h1> {{ product.options_with_values[1].selected_value  }}</h1>
 
+<div class="color-name">
+  ${items_without_repetaion}
+</div>
 
 </div>
 
