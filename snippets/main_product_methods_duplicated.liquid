@@ -1,0 +1,159 @@
+computed: {
+    current_variant() {
+      return this.variants.find(variant => variant.id == this.current_variant_id);
+    }
+  },
+
+methods: {
+    variant_from_options() {
+      const variant = this.variants.find((variant) => {
+        var match = true;
+        if(variant.option1 != '') {
+          match = variant.option1 == this.variant_selection.option1
+        }
+        if(match && variant.optionColor != '') {
+          match = variant.optionColor == this.variant_selection.optionColor
+        }
+        if(match && variant.option3 != '') {
+          match = variant.option3 == this.variant_selection.option3
+        }
+        return match;
+      });
+      this.current_variant_id = variant.id;
+      this.update_history_state(variant);
+     
+    },
+    update_history_state(variant) {
+      if(!history.replaceState || !variant) {
+        return;
+      }
+      var newurl = window.location.protocol + '//' + window.location.host + window.location.pathname + '?variant=' + variant.id;
+      window.history.replaceState({path: newurl}, '', newurl);
+    },
+
+    printArray:function(item, index){
+      this.$refs.myId.innerHTML = this.$refs.myId.innerHTML + "<p>Index["+item.ida+"] = "+item.name+"</p>";
+       },
+       myFunction: function () {		
+        this.elmnIndex = this.items_without_repetaion.forEach(this.printArray);
+        },
+       valuae: function (str,index) {
+        this.$refs.myIda.innerHTML = this.$refs.myIda.innerHTML + "<p  @click='myFunction()'>Index["+index+"] = "+str+"</p>";
+        {% for color_option in product.options_by_name['Color'].values %}
+          if(str.search(this.value{{ forloop.index }} ) >= 0 ) {
+            return (
+              this.names.push(this.value{{ forloop.index }} )
+            );
+          }
+        {% endfor %} 
+       
+    
+    },
+        myFunctionstrs: function () {		
+          this.elmnIndex = this.strs.forEach(this.valuae);
+            
+          },
+          itemsmyFunction: function () {
+            this.items = this.color_counts.map(this.itemstestFunction);
+          },
+
+          itemstestFunction: function (ida, index) {
+            return {
+              ida: ida,
+              name: this.names[index],
+              image: this.varintimagelink[index],
+            
+
+            }
+          },
+          removeDuplicates : function(originalArray, prop){
+            const newArray = [];
+            const lookupObject  = {};
+       
+            for(var i in originalArray) {
+               lookupObject[originalArray[i][prop]] = originalArray[i];
+            }
+       
+            for(i in lookupObject) {
+                newArray.push(lookupObject[i]);
+               
+              
+            }
+           
+            {% comment %} fruitsa.push(newArray); {% endcomment %}
+            return newArray;
+          },
+
+          showconsole: function() {
+            console.log(this.items);
+            let aaa = this.removeDuplicates(this.items, "name");
+            this.items_without_repetaion = aaa;
+          },
+          {% comment %} west code //// {% endcomment %}
+          items_without_repetaion_jeson_funcation: function(){
+            this.items_without_repetaion_jeson = JSON.stringify(this.items_without_repetaion);
+           
+            console.log(this.items_without_repetaion_jeson);
+          },
+          itemfunctiondatasending: function( vale){
+            {% comment %} console.log(vale);
+            this.variant_selection.optionColor = vale;
+            this.variant_from_options(); {% endcomment %}
+            let number= 0;
+            console.log(this.proudct_option_size);
+            for (let i = 0; i < this.proudct_option_size; i++) {
+              console.log("product.options_with_values["+ i + "].selected_value");
+              ++number
+          
+              console.log(number);
+            
+            }
+            
+          },
+          varint_index_find: function(){
+            console.log("varint index find");
+ 
+            {% for value in product.options_by_name['Color'].values %}
+              if( this.value{{ forloop.index }} == "{{ product.options_with_values[1].selected_value  }}"){
+                console.log(this.value{{ forloop.index }} +  "product.options_with_values[1].selected_value");
+                this.variant_selection.optionColor = {{ product.options_with_values[1].selected_value  }};
+                this.variants.optionColor = {{ variant.option1 }};
+                {% comment %} this.item1 = {% endcomment %}
+
+              }
+              if( this.value{{ forloop.index }} == "{{ product.options_with_values[2].selected_value  }}"){
+                console.log(this.value{{ forloop.index }} +  "product.options_with_values[2].selected_value");
+                this.variant_selection.optionColor = {{ product.options_with_values[2].selected_value  }};
+                this.variants.optionColor = {{ variant.option2 }};
+                {% comment %} this.item1 = {% endcomment %}
+
+              }
+              if( this.value{{ forloop.index }} == "{{ product.options_with_values[3].selected_value  }}"){
+                console.log(this.value{{ forloop.index }} +  "product.options_with_values[1].selected_value");
+                this.variant_selection.optionColor = {{ product.options_with_values[3].selected_value  }};
+                this.variants.optionColor = {{ variant.option3 }};
+
+                {% comment %} this.item1 = {% endcomment %}
+
+              }
+              
+            {% endfor %}
+    
+          },
+    
+    
+
+  },   
+   mounted: function() {
+    {% comment %} this.myFunction() // Calls the method before page loads {% endcomment %}
+    this.myFunctionstrs(); // Calls the method before page loads
+    // Calls the method before page loads
+    this.itemsmyFunction(); // Calls the method before page loads
+    this.removeDuplicates(); // Calls the method before page loads
+    this.items_without_repetaion_jeson_funcation();
+    this.showconsole(); // Calls the method before page loads
+     // Calls the method before page loads
+    this.varint_index_find();
+  
+
+    }

@@ -1,11 +1,11 @@
 {
   "sections": {
-    "main-home-product": {
-      "type": "main-home-product",
+    "main-home-product-duplicated": {
+      "type": "main-home-product-duplicated",
       "settings": {
 
       }
     }
   },
-  "order": ["main-home-product"]
+  "order": ["main-home-product-duplicated"]
 }
